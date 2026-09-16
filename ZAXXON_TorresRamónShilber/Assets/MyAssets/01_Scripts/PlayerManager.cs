@@ -16,7 +16,8 @@ public class PlayerManager : MonoBehaviour
     }
     void Start()
     {
-
+        isAlive = true;
+        Awake();
     }
     private void Awake()
     {
