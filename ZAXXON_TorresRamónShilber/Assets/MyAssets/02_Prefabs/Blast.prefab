@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7440946171878148505}
   - component: {fileID: 3703609163672991455}
   - component: {fileID: 1174434342081063710}
+  - component: {fileID: 6572430773102714591}
+  - component: {fileID: 3367381810304519689}
   m_Layer: 0
   m_Name: Blast
   m_TagString: Untagged
@@ -112,3 +114,33 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6572430773102714591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3223310870058392285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a35acd29d25bbab41ad01ded74699f96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BlastManager
+  playerTransform: {fileID: 0}
+  distance: 1
+  verticalOffset: 1
+--- !u!114 &3367381810304519689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3223310870058392285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a35acd29d25bbab41ad01ded74699f96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BlastManager
+  playerTransform: {fileID: 0}
+  distance: 1
+  verticalOffset: 1

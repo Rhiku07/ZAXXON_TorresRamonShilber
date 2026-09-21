@@ -9,14 +9,17 @@ public class BlastSpawner : MonoBehaviour
     [SerializeField] float verticalOffset = 0f;
     [SerializeField] GameObject MyPrefab;
     [SerializeField] Transform InitPos;
+    [SerializeField] float blastSpeed;
     Vector3 Newpos;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        inputActions.Player.Fire.started += _ => Shoot();
+        Awake();
     }
 
-    // Update is called once per frame
+  
+    
     void LateUpdate()
     {
         Vector3 offset = new Vector3(0f, verticalOffset, distance);
@@ -27,22 +30,37 @@ public class BlastSpawner : MonoBehaviour
         //Creamos la instancia del asset de entradas IMPORTANTE: hay que activarlo en OnEnable()
         inputActions = new InputActions();
 
-        //Cuando pulsamos el botón de fuego se ejecuta el método correspondiente
-
-        inputActions.Player.Fire.started += _ => Shoot();
-
-
-        //Cuando activamos la entrada de mover en X le damos el variable a la valor, y al dejar de tocarla la ponemos en cero
-
-
 
     }
+
+
+   
     void Shoot()
     {
-        Vector3 CambioPos = new Vector3 ;
-        Newpos = InitPos.position + CambioPos;
-        Instantiate(MyPrefab, Newpos, Quaternion.identity);
-        Invoke("SpawnPipe", 2f);
+
+        Vector3 spawnPos = playerTransform.position + playerTransform.forward * 1f;
+        GameObject blast = Instantiate(MyPrefab, spawnPos, playerTransform.rotation);
+
+        Rigidbody rb = blast.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.linearVelocity = playerTransform.forward * 15f; // velocidad del proyectil
+        }
+
+
+    
     }
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Disable();
+    }
+
 }
+    
+
 
