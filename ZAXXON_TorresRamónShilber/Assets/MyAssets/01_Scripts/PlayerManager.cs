@@ -53,8 +53,8 @@ public class PlayerManager : MonoBehaviour
     void PlayerMove()
     {
         
-            transform.Translate(Vector3.right *moveX * Time.deltaTime, Space.World);
-            transform.Translate(Vector3.up * moveY * Time.deltaTime , Space.World);
+            transform.Translate(Vector3.right*desplSpeed *moveX * Time.deltaTime, Space.World);
+            transform.Translate(Vector3.up * desplSpeed * moveY * Time.deltaTime , Space.World);
         
     }
 
