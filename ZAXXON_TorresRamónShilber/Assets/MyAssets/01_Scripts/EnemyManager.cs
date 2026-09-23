@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     //La velocidad de movimiento, que la obtendré del jugador
-    float speed;
+    [SerializeField]float enemySpeed;
 
     //El componente playerManager que tendrá el jugador
     [SerializeField] PlayerManager playerManager;
@@ -22,8 +22,8 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         //Me muevo a la velocidad que diga el jugador
-        speed = playerManager.worldSpeed;
-        transform.Translate(Vector3.back * speed * Time.deltaTime);
+        enemySpeed = playerManager.worldSpeed;
+        transform.Translate(Vector3.back * enemySpeed* Time.deltaTime);
 
     }
 }
