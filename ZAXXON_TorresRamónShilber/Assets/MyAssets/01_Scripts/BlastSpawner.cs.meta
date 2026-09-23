@@ -4,9 +4,8 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - playerTransform: {instanceID: 0}
-  - MyPrefab: {fileID: 3223310870058392285, guid: 3a1acee98a8bb4c49acc052eb1e1ec72, type: 3}
-  - InitPos: {instanceID: 0}
+  - bulletPrefab: {fileID: 772093273149114163, guid: 415d1afb2deff154e8ed0f07a995f3e0, type: 3}
+  - firePoint: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

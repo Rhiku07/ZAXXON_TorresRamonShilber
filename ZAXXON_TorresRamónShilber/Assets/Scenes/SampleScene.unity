@@ -164,8 +164,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdeef6d9d1c9f97449c93fbc05b883d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
-  speed: 0
   desplSpeed: 20
+  limitX: 10
+  limitY: 10
+  maxRotation: 60
+  bulletPrefab: {fileID: 3223310870058392285, guid: 3a1acee98a8bb4c49acc052eb1e1ec72, type: 3}
+  firePoint: {fileID: 115602813}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,12 +769,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9f1bb210aa1cfa47ab741a716ab24d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlastSpawner
-  playerTransform: {fileID: 115602813}
-  distance: 1
-  verticalOffset: 0
-  MyPrefab: {fileID: 3223310870058392285, guid: 3a1acee98a8bb4c49acc052eb1e1ec72, type: 3}
-  InitPos: {fileID: 115602813}
-  blastSpeed: 20
+  speed: 15
+  lifeTime: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

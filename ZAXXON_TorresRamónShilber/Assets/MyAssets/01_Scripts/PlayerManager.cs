@@ -4,134 +4,95 @@ using UnityEngine.InputSystem;
 public class PlayerManager : MonoBehaviour
 {
     bool isAlive;
-    public float speed;
+    [SerializeField] public float worldSpeed;
     [SerializeField] float desplSpeed;
+    [SerializeField] float limitX = 10f;
+    [SerializeField] float limitY = 10f;
+    [SerializeField] BlastSpawner blastSpawner;
+    
+
     float moveX;
     float moveY;
     InputActions inputActions;
-    float limitX = 10;
-    float limitY = 10;
-    float MaxRotation = 60f;
-   
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    
+
+      float rotation;
+    float maxRotationZ = 35f;
+    float maxRotationX = 15f;
+
+    //ROTACIÓN SUAVIZADA
+    [SerializeField] float smoothTime = 0.3f;
+    private Vector3 velocity = Vector3.zero;
+    Vector3 currentRot;
+
+
+    void Awake()
+    {
+        inputActions = new InputActions();
+
+        inputActions.Player.MoveX.performed += ctx => moveX = ctx.ReadValue<float>();
+        inputActions.Player.MoveX.canceled += _ => moveX = 0f;
+
+        inputActions.Player.MoveY.performed += ctx => moveY = ctx.ReadValue<float>();
+        inputActions.Player.MoveY.canceled += _ => moveY = 0f;
+
+        inputActions.Player.Fire.started += _ => blastSpawner.Fire();
+    }
+
     void Start()
     {
         isAlive = true;
-        Awake();
     }
+
     void Update()
     {
-        if (isAlive == true)
-        {
+        if (isAlive) {
             CheckPosition();
         }
-
-
+           
     }
-    private void Awake()
+
+    void CheckPosition()
     {
-        //Creamos la instancia del asset de entradas IMPORTANTE: hay que activarlo en OnEnable()
-        inputActions = new InputActions();
-
-        //Cuando pulsamos el botón de fuego se ejecuta el método correspondiente
-        
-            inputActions.Player.MoveX.performed += ctx => moveX = ctx.ReadValue<float>();
-            inputActions.Player.MoveX.canceled += _ => moveX = 0f;
-
-            inputActions.Player.MoveY.performed += ctx => moveY = ctx.ReadValue<float>();
-            inputActions.Player.MoveY.canceled += _ => moveY = 0f;
-
-            inputActions.Player.Fire.started += _ => Fire();
-        
-
-        //Cuando activamos la entrada de mover en X le damos el variable a la valor, y al dejar de tocarla la ponemos en cero
-       
-
-
+        bool bloqueadoX = FueraDeLimiteX();
+        bool bloqueadoY = FueraDeLimiteY();
+        PlayerMove(bloqueadoX, bloqueadoY);
+        PlayerRotation();
     }
-    void PlayerMove()
+
+    void PlayerMove(bool bloqueadoX, bool bloqueadoY)
     {
-        
-            transform.Translate(Vector3.right*desplSpeed *moveX * Time.deltaTime, Space.World);
-            transform.Translate(Vector3.up * desplSpeed * moveY * Time.deltaTime , Space.World);
-        
+        float mx = bloqueadoX ? 0f : moveX;
+        float my = bloqueadoY ? 0f : moveY;
+        transform.Translate(Vector3.right * desplSpeed * mx * Time.deltaTime, Space.World);
+        transform.Translate(Vector3.up * desplSpeed * my * Time.deltaTime, Space.World);
     }
 
     void PlayerRotation()
     {
-        transform.eulerAngles = Vector3.forward * -MaxRotation * moveX ;
-    }
-    void CheckPosition()
-    {
-        bool InlimitX = CheckPositionX(limitX);
-        bool InlimitY = CheckPositionY(limitY);
-       
-        if (InlimitX == false && InlimitY == false)
-        {
-            PlayerMove();
-            PlayerRotation();
-        }
-    }
-    void Fire()
-    {
-        print("POOM");
+        Vector3 vectorRotZ = Vector3.forward * -maxRotationZ * moveX;
+        Vector3 vectorRotX = Vector3.right * -maxRotationX * moveY;
+        Vector3 vectorRot = vectorRotX + vectorRotZ;
+        currentRot = Vector3.SmoothDamp(currentRot, vectorRot, ref velocity, smoothTime);
+        transform.eulerAngles = currentRot;
     }
 
+   
 
-    //IMPORTANTE: activar el Inpu
-    private void OnEnable()
+    bool FueraDeLimiteX()
     {
-        inputActions.Enable();
-    }
-
-    private void OnDisable()
-    {
-        inputActions.Disable();
-    }
-    
-    bool CheckPositionX(float limitX)
-    {
-        bool inLimit ;
         float posX = transform.position.x;
-        if (posX > limitX && moveX > 0)
-        {
-            inLimit = true;
-        }
-        else if (posX < -limitX && moveX < 0)
-        {
-            inLimit = true;
-        }
-        else
-        {
-            {
-                
-                inLimit = false;
-            }
-        }
-        return inLimit;
+        if (posX > limitX && moveX > 0) return true;
+        if (posX < -limitX && moveX < 0) return true;
+        return false;
     }
-    bool CheckPositionY(float limitY)
+
+    bool FueraDeLimiteY()
     {
-        bool inLimitY = false;
         float posY = transform.position.y;
-        if (posY > limitY && moveY > 0)
-        {
-
-            inLimitY = true;
-        }
-        else if (posY < -limitY && moveY < 0)
-        {
-
-            inLimitY = true;
-        }
-        else
-        {
-            {
-
-                inLimitY = false;
-            }
-        }
-        return inLimitY;
-    } 
+        if (posY > limitY && moveY > 0) return true;
+        if (posY < -limitY && moveY < 0) return true;
+        return false;
+    }
+    void OnEnable() => inputActions.Enable();
+    void OnDisable() => inputActions.Disable();
 }
