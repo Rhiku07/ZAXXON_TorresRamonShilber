@@ -712,8 +712,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0184d5a8413d43f46891955e8068332f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
-  enemyPrefab: {fileID: 8654191693425420595, guid: 3989142cbc3964448a1f4dd70200f1ce, type: 3}
-  enemySpawner: {fileID: 545156366}
+  smoothSpeed: 0
+  initReference: {fileID: 0}
+  endReference: {fileID: 0}
 --- !u!4 &545156366
 Transform:
   m_ObjectHideFlags: 0
@@ -723,7 +724,7 @@ Transform:
   m_GameObject: {fileID: 545156364}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.10281, y: -15.65878, z: 0.13792}
+  m_LocalPosition: {x: -0.10281, y: -15.65878, z: 92.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
