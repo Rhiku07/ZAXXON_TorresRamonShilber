@@ -1,14 +1,14 @@
 
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering;
+
 
 public class EnemySpawner : MonoBehaviour
 {
+    
     [SerializeField] PlayerManager playerManager;
     [SerializeField] GameObject enemyPrefab;
     [SerializeField] Transform enemySpawner;
-    [SerializeField] Transform enemySpawnPrefab;
     [SerializeField] float interval;
      float maxX = 10f;
      float maxY = 20f;

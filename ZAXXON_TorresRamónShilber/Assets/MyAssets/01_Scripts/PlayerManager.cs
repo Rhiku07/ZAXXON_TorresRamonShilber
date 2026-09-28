@@ -36,6 +36,8 @@ public class PlayerManager : MonoBehaviour
         inputActions.Player.MoveY.canceled += _ => moveY = 0f;
 
         inputActions.Player.Fire.started += _ => blastSpawner.Fire();
+
+        worldSpeed = 10f;
     }
 
     void Start()
@@ -93,6 +95,14 @@ public class PlayerManager : MonoBehaviour
         if (posY < -limitY && moveY < 0) return true;
         return false;
     }
-    void OnEnable() => inputActions.Enable();
-    void OnDisable() => inputActions.Disable();
+
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Disable();
+    }
 }
