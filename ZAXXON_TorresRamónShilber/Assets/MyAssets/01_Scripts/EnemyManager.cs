@@ -4,7 +4,7 @@ public class EnemyManager : MonoBehaviour
 {
     //La velocidad de movimiento, que la obtendré del jugador
     float speed;
-    float lifeTime;
+   
     //El componente playerManager que tendrá el jugador
     [SerializeField] PlayerManager playerManager;
 
@@ -26,7 +26,7 @@ public class EnemyManager : MonoBehaviour
         transform.Translate(Vector3.back * speed * Time.deltaTime);
         if(transform.position.z < -15f)
         {
-            Object.Destroy(gameObject, lifeTime);
+            Object.Destroy(gameObject);
         }
 
     }
