@@ -3,14 +3,21 @@ using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
-    bool isAlive;
+   
+    [SerializeField]float baseWorldSpeed = 10f;
     [SerializeField] public float worldSpeed;
     [SerializeField] float desplSpeed;
-    [SerializeField] float limitX = 10f;
-    [SerializeField] float limitY = 10f;
+    [SerializeField] float limitX = 20f;
+    [SerializeField] float limitY = 20f;
     [SerializeField] BlastSpawner blastSpawner;
-    
+    [SerializeField] float maxWorldSpeed = 100f;
+    [SerializeField] float maxDesplSpeed = 20f;
 
+    bool isAlive;
+    float aceleracion = 40f;
+    float desplAceleracion = 40f;
+    float baseDesplSpeed = 10f;
+    bool isFaster;
     float moveX;
     float moveY;
     InputActions inputActions;
@@ -37,12 +44,17 @@ public class PlayerManager : MonoBehaviour
 
         inputActions.Player.Fire.started += _ => blastSpawner.Fire();
 
-        worldSpeed = 10f;
+        inputActions.Player.Faster.started += _ => isFaster = true; 
+        inputActions.Player.Faster.canceled += _ => isFaster = false;
+
+        
     }
 
     void Start()
     {
         isAlive = true;
+        isFaster = false;
+        worldSpeed = baseWorldSpeed;
     }
 
     void Update()
@@ -59,13 +71,14 @@ public class PlayerManager : MonoBehaviour
         bool bloqueadoY = FueraDeLimiteY();
         PlayerMove(bloqueadoX, bloqueadoY);
         PlayerRotation();
+        Accelerate();
     }
 
     void PlayerMove(bool bloqueadoX, bool bloqueadoY)
     {
         float mx = bloqueadoX ? 0f : moveX;
         float my = bloqueadoY ? 0f : moveY;
-        transform.Translate(Vector3.right * desplSpeed * mx * Time.deltaTime, Space.World);
+        transform.Translate(Vector3.right * desplSpeed*  mx * Time.deltaTime, Space.World);
         transform.Translate(Vector3.up * desplSpeed * my * Time.deltaTime, Space.World);
     }
 
@@ -94,6 +107,27 @@ public class PlayerManager : MonoBehaviour
         if (posY > limitY && moveY > 0) return true;
         if (posY < -limitY && moveY < 0) return true;
         return false;
+    }
+
+    void Accelerate()
+    {
+        if (isFaster)
+        {
+            worldSpeed += aceleracion * Time.deltaTime;
+            desplSpeed += desplAceleracion * Time.deltaTime;
+
+            if (worldSpeed >= maxWorldSpeed && desplSpeed >= desplAceleracion)
+            {
+                worldSpeed = maxWorldSpeed;
+                desplSpeed = maxDesplSpeed;
+
+            }
+        }
+        else
+        {
+            worldSpeed = baseWorldSpeed;
+            desplSpeed = baseDesplSpeed;
+        }
     }
 
     private void OnEnable()

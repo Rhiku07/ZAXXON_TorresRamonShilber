@@ -1,48 +1,33 @@
-
 using System.Collections;
 using UnityEngine;
 
-
 public class EnemySpawner : MonoBehaviour
 {
-    
-    [SerializeField] PlayerManager playerManager;
     [SerializeField] GameObject enemyPrefab;
-    [SerializeField] Transform enemySpawner;
-    [SerializeField] float interval;
-     float maxX = 10f;
-     float maxY = 20f;
-     float minY = -15;
-    
+    [SerializeField] float interval = 0.3f;
+    [SerializeField] float rangeX = 20f;
+    [SerializeField] float rangeY = 20f;
 
     void Start()
     {
         StartCoroutine(SpawnEnemy());
-        interval = 0.3f;
     }
 
-    void Update()
-    {
-       
-    }
     void ShowEnemy()
     {
-        float randomX = Random.Range(maxX, -maxX);
-        float randomY = Random.Range(maxY, minY);
-        Vector3 pos = new Vector3(randomX, randomY, transform.position.z);
+        float randomX = Random.Range(-rangeX, rangeX);
+        float randomY = Random.Range(-rangeY, rangeY);
+        Vector3 pos = transform.position + new Vector3(randomX, randomY, 0f);
         Instantiate(enemyPrefab, pos, Quaternion.identity);
     }
-   IEnumerator SpawnEnemy()
+
+    IEnumerator SpawnEnemy()
     {
         while (true)
         {
-            {
+           
                 ShowEnemy();
-            }
-            yield return new WaitForSeconds(interval);
+          yield return new WaitForSeconds(interval);
         }
     }
-        
-  
 }
-
