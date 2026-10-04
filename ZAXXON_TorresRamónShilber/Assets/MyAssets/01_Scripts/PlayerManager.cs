@@ -10,8 +10,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] float limitX = 20f;
     [SerializeField] float limitY = 20f;
     [SerializeField] BlastSpawner blastSpawner;
-    [SerializeField] float maxWorldSpeed = 100f;
-    [SerializeField] float maxDesplSpeed = 20f;
+    [SerializeField] float maxWorldSpeed = 50f;
+    [SerializeField] float maxDesplSpeed = 30f;
 
     bool isAlive;
     float aceleracion = 40f;
