@@ -12,6 +12,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] BlastSpawner blastSpawner;
     [SerializeField] float maxWorldSpeed = 50f;
     [SerializeField] float maxDesplSpeed = 30f;
+   
+
 
     bool isAlive;
     float aceleracion = 40f;
@@ -20,6 +22,7 @@ public class PlayerManager : MonoBehaviour
     bool isFaster;
     float moveX;
     float moveY;
+   
     InputActions inputActions;
 
       float rotation;
@@ -69,7 +72,6 @@ public class PlayerManager : MonoBehaviour
     {
         bool bloqueadoX = FueraDeLimiteX();
         bool bloqueadoY = FueraDeLimiteY();
-        PlayerMove(bloqueadoX, bloqueadoY);
         PlayerRotation();
         Accelerate();
     }
@@ -114,7 +116,7 @@ public class PlayerManager : MonoBehaviour
         if (isFaster)
         {
             worldSpeed += aceleracion * Time.deltaTime;
-            desplSpeed += desplAceleracion * Time.deltaTime;
+            desplSpeed += desplAceleracion  * Time.deltaTime;
 
             if (worldSpeed >= maxWorldSpeed && desplSpeed >= desplAceleracion)
             {
