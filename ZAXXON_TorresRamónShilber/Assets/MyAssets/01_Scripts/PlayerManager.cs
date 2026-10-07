@@ -8,16 +8,17 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] public float worldSpeed;
     [SerializeField] float desplSpeed;
     [SerializeField] float limitX = 20f;
-    [SerializeField] float limitY = 20f;
+    [SerializeField] float limitY = 17f;
     [SerializeField] BlastSpawner blastSpawner;
+    [SerializeField] EnemySpawner enemySpawner;
     [SerializeField] float maxWorldSpeed = 50f;
     [SerializeField] float maxDesplSpeed = 30f;
    
 
 
     bool isAlive;
-    float aceleracion = 40f;
-    float desplAceleracion = 40f;
+    float aceleracion = 50f;
+    float desplAceleracion = 50f;
     float baseDesplSpeed = 10f;
     bool isFaster;
     float moveX;
@@ -50,14 +51,17 @@ public class PlayerManager : MonoBehaviour
         inputActions.Player.Faster.started += _ => isFaster = true; 
         inputActions.Player.Faster.canceled += _ => isFaster = false;
 
-        
+        inputActions.Player.Start.started += _ => StartGame();
+        inputActions.Player.Start.started += _ => enemySpawner.StartSpawn();
     }
 
     void Start()
     {
+        Time.timeScale = 0f;
         isAlive = true;
         isFaster = false;
         worldSpeed = baseWorldSpeed;
+        
     }
 
     void Update()
@@ -67,7 +71,10 @@ public class PlayerManager : MonoBehaviour
         }
            
     }
-
+    void StartGame()
+    {
+        Time.timeScale = 1f;
+    }
     void CheckPosition()
     {
         bool bloqueadoX = FueraDeLimiteX();
@@ -79,6 +86,7 @@ public class PlayerManager : MonoBehaviour
 
     void PlayerMove(bool bloqueadoX, bool bloqueadoY)
     {
+
         float mx = bloqueadoX ? 0f : moveX;
         float my = bloqueadoY ? 0f : moveY;
         transform.Translate(Vector3.right * desplSpeed*  mx * Time.deltaTime, Space.World);

@@ -1,38 +1,51 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 public class EnemySpawner : MonoBehaviour
 {
     // Prefab que voy a spawnear con array
     [SerializeField] GameObject[] enemies;
 
     // intervalos
-    [SerializeField] float interval = 2f;
+    [SerializeField] float interval = 0.1f;
 
     // limites
-    [SerializeField] float limitX = 20f;
-    [SerializeField] float limitUp = 10f;
-    [SerializeField] float limitDown = -10f;
+     float limitX = 20f;
+     float limitUp = 20f;
+     float limitDown = -10f;
 
     // distancia entre enemigos
     [SerializeField] float firstEnemyDistance;
     [SerializeField] float distanceBetweenEnemies;
-
+    
     // oleadas
     float waves = 5;
-
+    
     // jugador
     [SerializeField] PlayerManager playerManager;
-
+    bool isSpawning;
     void Start()
     {
+        interval = 0.1f;
 
-        StartCoroutine("SpawnEnemy");
-        EnemigosIntermedios();
-        firstEnemyDistance = 100f;
-        distanceBetweenEnemies = 20f;
 
     }
-
+   
+    public void StartSpawn()
+    {
+        if (isSpawning==false)
+        {
+           
+            StartCoroutine("SpawnEnemy");
+            EnemigosIntermedios();
+            firstEnemyDistance = 100f;
+            distanceBetweenEnemies = 5f;
+            isSpawning = true;
+        }
+      
+       
+    }
     void SacarNave(float distanceZ)
     {
         float randomX = Random.Range(-limitX, limitX);
@@ -70,5 +83,6 @@ public class EnemySpawner : MonoBehaviour
 
         }
     }
+
 }
 
