@@ -74,6 +74,7 @@ public class PlayerManager : MonoBehaviour
         bool bloqueadoY = FueraDeLimiteY();
         PlayerRotation();
         Accelerate();
+        PlayerMove(bloqueadoX,bloqueadoY);
     }
 
     void PlayerMove(bool bloqueadoX, bool bloqueadoY)
